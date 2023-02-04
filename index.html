@@ -89,21 +89,25 @@
             const bar = item.querySelector("progress");
             bar.value = fraction*100;
         }
-        const items = document.querySelectorAll(".progress-item");
-        const now = new Date();
-        const dayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-        const dayOfWeek = dayStart.getDay();
-        const weekStart = new Date(now.getFullYear(), now.getMonth(), now.getDate()-dayOfWeek);
-        const monthStart = new Date(now.getFullYear(), now.getMonth(), 1);
-        const daysInMonth = (new Date(now.getFullYear(), now.getMonth()+1, 0)).getDate();
-        const yearStart = new Date(now.getFullYear(), 0, 1);
-        const msInDay = 24*60*60*1000;
-        const year = now.getFullYear();
-        const daysInYear = ((year % 4 === 0 && year % 100 > 0) || year % 400 == 0) ? 366 : 365;
-        setPercent(items[0], (now - dayStart)/msInDay);
-        setPercent(items[1], (now - weekStart)/(7*msInDay));
-        setPercent(items[2], (now - monthStart)/(daysInMonth*msInDay));
-        setPercent(items[3], (now - yearStart)/(daysInYear*msInDay));
+        function updateAll(){
+            const items = document.querySelectorAll(".progress-item");
+            const now = new Date();
+            const dayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+            const dayOfWeek = dayStart.getDay();
+            const weekStart = new Date(now.getFullYear(), now.getMonth(), now.getDate()-dayOfWeek);
+            const monthStart = new Date(now.getFullYear(), now.getMonth(), 1);
+            const daysInMonth = (new Date(now.getFullYear(), now.getMonth()+1, 0)).getDate();
+            const yearStart = new Date(now.getFullYear(), 0, 1);
+            const msInDay = 24*60*60*1000;
+            const year = now.getFullYear();
+            const daysInYear = ((year % 4 === 0 && year % 100 > 0) || year % 400 == 0) ? 366 : 365;
+            setPercent(items[0], (now - dayStart)/msInDay);
+            setPercent(items[1], (now - weekStart)/(7*msInDay));
+            setPercent(items[2], (now - monthStart)/(daysInMonth*msInDay));
+            setPercent(items[3], (now - yearStart)/(daysInYear*msInDay));
+        }
+        updateAll();
+        setInterval(updateAll, 1000*60);
     </script>
 </body>
 </html>
